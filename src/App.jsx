@@ -1,7 +1,8 @@
 function App() {
   return (
-    <h1 color="white">My Portfolio</h1>
-
+    <>
+      <h1>My Personal Portfolio</h1>
+    </>
   )
 }
 
