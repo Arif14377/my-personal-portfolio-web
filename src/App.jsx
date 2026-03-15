@@ -1,9 +1,12 @@
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home.jsx";
+
 function App() {
   return (
     <>
-      <h1>My Personal Portfolio</h1>
+      <Home />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
