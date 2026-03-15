@@ -79,7 +79,7 @@ export default function Navbar() {
             <div className="h-12 w-12 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-blue-300 font-bold">AR</div>
             <div>
               <p className="text-white font-bold">Arif Rahman</p>
-              <p className="text-xs text-slate-400">arif.rahman@email.com</p>
+              <p className="text-xs text-slate-400">arifrahman14377@gmail.com</p>
             </div>
           </div>
 
