@@ -60,12 +60,12 @@ export default function Navbar() {
       </header>
 
       {/* Mobile Sidebar (Dipindahkan keluar dari header agar z-index aman) */}
-      <div className={`fixed inset-0 z-[100] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+      <div className={`fixed inset-0 z-100 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
         
         {/* Panel Sidebar */}
-        <div className={`absolute right-0 top-0 h-full w-[280px] bg-slate-950 shadow-2xl p-6 transition-transform duration-500 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+        <div className={`absolute right-0 top-0 h-full w-70 bg-slate-950 shadow-2xl p-6 transition-transform duration-500 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
           
           <button
             onClick={() => setIsOpen(false)}
