@@ -8,6 +8,7 @@ const Home = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
     if (selectedProject) {
@@ -26,39 +27,68 @@ const Home = () => {
     };
   }, [selectedProject]);
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setIsLight(savedTheme === 'light');
+      return;
+    }
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    setIsLight(prefersLight);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  }, [isLight]);
+
   const skills = [
-    "Go (Golang)", "JavaScript", "React", "Redux", "HTML", "CSS",
+    "Go (Golang)", "JavaScript", "React", "Redux", "Vite", "Tailwind CSS",
     "Gin", "RESTful API Development", "JWT Authentication", "Argon2 Password Hashing",
-    "Middleware Implementation", "PostgreSQL", "Redis", "Docker", "Docker Compose",
-    "CI/CD (GitHub Actions)", "Linux Server Environment", "Git", "Postman", "REST API Testing"
+    "Middleware Implementation", "PostgreSQL", "Redis", "WebSocket", "Docker", "Docker Compose",
+    "CI/CD (GitHub Actions)", "Linux Server Environment", "Git", "Swaggo", "REST API Testing"
   ];
 
   const experiences = [
-    { role: "Senior Fullstack Developer", company: "Tech Startup", period: "2023 — Sekarang", desc: "Membangun dan memelihara aplikasi web skala besar menggunakan React, Node.js, dan PostgreSQL. Memimpin tim pengembang dalam implementasi fitur baru." },
-    { role: "Fullstack Developer", company: "Digital Agency", period: "2021 — 2023", desc: "Mengembangkan solusi web custom untuk berbagai klien. Fokus pada performa, aksesibilitas, dan pengalaman pengguna yang optimal." },
-    { role: "Frontend Developer", company: "Software House", period: "2019 — 2021", desc: "Membangun antarmuka pengguna responsif dengan React dan TypeScript. Berkolaborasi dengan tim desain untuk implementasi UI/UX." },
+    {
+      role: "Backend Web Developer",
+      company: "PT Nashta Global Utama",
+      period: "Apr 2026 - May 2026",
+      desc: "Mengembangkan Smart Links, URL shortener berperforma tinggi dengan analytics real-time berbasis Go, PostgreSQL, dan WebSocket."
+    },
+    {
+      role: "Fullstack Web Developer",
+      company: "Koda Tech Academy",
+      period: "Des 2025 - Apr 2026",
+      desc: "Membangun aplikasi fullstack menggunakan React dan Go, termasuk sistem autentikasi JWT, caching Redis, serta penerapan Clean Architecture."
+    },
+    {
+      role: "Fullstack Web Developer (Bootcamp Projects)",
+      company: "Koda Tech Academy",
+      period: "Jan 2026 - Apr 2026",
+      desc: "Mengembangkan proyek Coffee Shop Ecommerce dan Shorten (URL Shortener) dengan fitur end-to-end dari frontend, backend, database, hingga CI/CD."
+    },
   ];
 
   const PROJECTS = [
     {
       id: 1,
-      title: "Analytics Dashboard",
-      category: "Web Application",
+      title: "Smart Links",
+      category: "Backend & Analytics Platform",
       image: "https://images.unsplash.com/photo-1551288049-bbda30a04da1?auto=format&fit=crop&q=80&w=600",
       images: [
         "https://images.unsplash.com/photo-1551288049-bbda30a04da1?auto=format&fit=crop&q=80&w=600",
         "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
         "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=600"
       ],
-      description: "Real-time analytics platform with interactive data visualization and reporting tools.",
-      problem: "Client needed a way to visualize complex datasets from multiple sources in real-time without performance degradation.",
-      solution: "Built a high-performance dashboard using React with virtualized rendering. Integrated 12+ API endpoints and reduced initial load time by 40%.",
-      stack: ["React", "TypeScript", "Node.js", "PostgreSQL", "D3.js", "Redis"],
-      link: "https://example.com"
+      description: "URL shortener dengan analytics real-time untuk memantau performa link dan perilaku pengunjung. Keterangan: fokus saya pada backend service, data processing, dan optimasi query analytics.",
+      problem: "Dibutuhkan sistem short link bertrafik tinggi dengan pelacakan klik detail dan pembaruan analytics langsung.",
+      solution: "Membangun REST API Go dengan Clean Architecture, indexing PostgreSQL untuk query time-series, serta update dashboard real-time via WebSocket.",
+      stack: ["Go (Golang)", "PostgreSQL", "REST API", "WebSocket", "Clean Architecture", "Indexing"],
+      link: "https://github.com/Arif14377"
     },
     {
       id: 2,
-      title: "E-Commerce Platform",
+      title: "Coffee Shop Ecommerce",
       category: "Fullstack Application",
       image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600",
       images: [
@@ -66,92 +96,44 @@ const Home = () => {
         "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=600",
         "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=600"
       ],
-      description: "Sistem e-commerce berskala besar dengan manajemen inventaris otomatis dan integrasi pembayaran.",
-      problem: "Sistem lama mengalami race condition saat stok menipis dan proses checkout yang lambat.",
-      solution: "Mengimplementasikan locking mechanism pada database PostgreSQL dan integrasi Midtrans. Menggunakan Redis untuk caching produk populer.",
-      stack: ["Next.js", "Go", "PostgreSQL", "Redis", "Stripe", "Docker"],
-      link: "https://example.com"
+      description: "Aplikasi e-commerce fullstack dengan alur belanja lengkap dari autentikasi hingga checkout dan riwayat pesanan. Keterangan: proyek ini dikerjakan end-to-end untuk menguji integrasi frontend, backend, cache, dan CI/CD.",
+      problem: "Membutuhkan arsitektur aplikasi yang maintainable, aman, dan tetap responsif saat beban data meningkat.",
+      solution: "Mengimplementasikan backend Go (Gin) + frontend React, JWT auth + OTP, Argon2 hashing, Redis caching, Docker Compose, dan CI/CD GitHub Actions.",
+      stack: ["React", "Redux", "Go (Golang)", "Gin", "PostgreSQL", "Redis", "JWT", "Argon2", "Docker Compose", "GitHub Actions"],
+      link: "https://github.com/Arif14377"
     },
     {
       id: 3,
-      title: "AI Content Generator",
-      category: "SaaS Product",
+      title: "Shorten",
+      category: "Fullstack URL Shortener",
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
       images: [
         "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
         "https://images.unsplash.com/photo-1675271591211-126ad94e495d?auto=format&fit=crop&q=80&w=600",
         "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?auto=format&fit=crop&q=80&w=600"
       ],
-      description: "Platform berbasis AI untuk membantu konten kreator membuat draf artikel dan caption media sosial secara otomatis.",
-      problem: "Proses pembuatan konten manual memakan waktu terlalu lama bagi tim marketing.",
-      solution: "Integrasi OpenAI API dengan prompt engineering yang dioptimasi. Membangun sistem antrian (Queue) menggunakan BullMQ untuk menangani request AI yang berat.",
-      stack: ["React", "Node.js", "OpenAI", "BullMQ", "Tailwind CSS", "MongoDB"],
-      link: "https://example.com"
+      description: "URL shortener fullstack dengan autentikasi, manajemen link personal, redirect publik, dan profile management. Keterangan: menekankan keamanan auth, validasi slug, serta caching Redis untuk performa listing link.",
+      problem: "Perlu sistem short link yang aman, fleksibel (custom slug), dan cepat diakses user.",
+      solution: "Membangun frontend React (Vite + Tailwind), backend Go (Gin), validasi slug, soft delete, Redis caching, serta upload foto profil multipart.",
+      stack: ["React", "Vite", "Tailwind CSS", "Go (Golang)", "Gin", "PostgreSQL", "Redis", "JWT", "Argon2", "pgx"],
+      link: "https://github.com/Arif14377"
     },
     {
       id: 4,
-      title: "Fleet Management System",
-      category: "Enterprise Solution",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600",
+      title: "Coffee Shop Backend API (Express.js)",
+      category: "Backend Application",
+      image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=80&w=600",
       images: [
-        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1519003722824-192d992a605b?auto=format&fit=crop&q=80&w=600"
+        "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=80&w=600",
+        "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=600",
+        "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=600"
       ],
-      description: "Aplikasi pelacakan logistik real-time untuk memantau pergerakan armada pengiriman barang.",
-      problem: "Kesulitan memantau lokasi kurir secara akurat dan jadwal pengiriman yang sering bentrok.",
-      solution: "Menggunakan Google Maps API untuk geofencing dan Socket.io untuk pengiriman data koordinat real-time dari aplikasi driver.",
-      stack: ["React Native", "Express", "Socket.io", "PostgreSQL", "Google Maps SDK"],
-      link: "https://example.com"
+      description: "Backend API Coffee Shop berbasis Express.js untuk autentikasi, katalog produk, cart, checkout, dan order history. Keterangan: desain endpoint dibuat interchangeable dengan implementasi Golang agar switching stack backend tetap mudah.",
+      problem: "Diperlukan backend yang fleksibel untuk pembelajaran dan eksperimen stack tanpa mengubah kontrak API di sisi frontend.",
+      solution: "Menerapkan struktur modular Express.js, standardisasi response format, JWT auth middleware, serta desain API contract yang konsisten agar dapat dipindahkan ke Go dengan perubahan minimal.",
+      stack: ["Express.js", "Node.js", "PostgreSQL", "JWT", "REST API", "Redis", "Docker"],
+      link: "https://github.com/Arif14377"
     },
-    {
-      id: 5,
-      title: "Learning Management System",
-      category: "EdTech",
-      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=600",
-      images: [
-        "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=600"
-      ],
-      description: "Platform kursus online dengan fitur video streaming, kuis interaktif, dan sertifikat otomatis.",
-      problem: "Biaya hosting video yang mahal dan proteksi konten yang lemah terhadap pembajakan.",
-      solution: "Integrasi AWS S3 dan CloudFront untuk pengiriman video yang efisien, serta sistem autentikasi JWT yang ketat.",
-      stack: ["Next.js", "Prisma", "AWS S3", "CloudFront", "Framer Motion"],
-      link: "https://example.com"
-    },
-    {
-      id: 6,
-      title: "Health Tech Booking",
-      category: "Healthcare",
-      image: "https://images.unsplash.com/photo-1505751172107-573967a4f9c5?auto=format&fit=crop&q=80&w=600",
-      images: [
-        "https://images.unsplash.com/photo-1505751172107-573967a4f9c5?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600"
-      ],
-      description: "Aplikasi pemesanan jadwal dokter dan konsultasi medis secara virtual.",
-      problem: "Antrean fisik yang tidak teratur dan kesulitan pasien dalam mencari jadwal dokter yang kosong.",
-      solution: "Membangun sistem kalender sinkron yang menangani timezone berbeda dan fitur pengingat otomatis via WhatsApp API.",
-      stack: ["React", "Golang", "MySQL", "Firebase", "Twilio"],
-      link: "https://example.com"
-    },
-    {
-      id: 7,
-      title: "Fintech Wallet",
-      category: "Financial Services",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600",
-      images: [
-        "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1559526324-4b87b5e36e41?auto=format&fit=crop&q=80&w=600"
-      ],
-      description: "Dompet digital untuk transfer antar pengguna dan pembayaran tagihan rutin.",
-      problem: "Keamanan transaksi dan integritas data saldo yang sangat kritikal.",
-      solution: "Mengadopsi arsitektur microservices dan database transaction yang ketat untuk memastikan tidak ada kehilangan data saat terjadi kegagalan sistem.",
-      stack: ["Vue.js", "NestJS", "PostgreSQL", "Kafka", "Kubernetes"],
-      link: "https://example.com"
-    }
   ];
 
   const projectsPerPage = 4;
@@ -161,25 +143,26 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <div className={isLight ? 'light-theme' : ''}>
+      <Navbar isLight={isLight} onToggleTheme={() => setIsLight((prev) => !prev)} />
       {/* Banner */}
-      <section className="bg-slate-950 text-white pb-20 px-6 md:px-12 lg:px-24">
+      <section id="home" className="bg-[#0b0e11] text-white pb-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto pt-50 grid md:grid-cols-2 gap-12 items-center">
       
           {/* Bagian Teks */}
           <div className="space-y-6">
-            <span className="text-blue-400 font-semibold tracking-widest text-sm uppercase">
+            <span className="text-amber-400 font-semibold tracking-widest text-sm uppercase">
               Fullstack Web Developer
             </span>
-            <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white to-gray-400">
+            <h1 className="hero-name text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white to-gray-400">
               Arif Rahman
             </h1>
             <p className="text-gray-400 text-lg leading-relaxed max-w-lg">
-              Fullstack Web Developer dengan pengalaman membangun aplikasi web modern
-              menggunakan <span className="text-blue-300 font-medium">React</span> dan
-              <span className="text-blue-300 font-medium"> Go (Golang)</span>.
-              Ahli dalam mengembangkan RESTful APIs, sistem autentikasi, dan aplikasi
-              berbasis database menggunakan PostgreSQL dan Redis.
+              Fullstack Web Developer dengan pengalaman membangun aplikasi web modern menggunakan
+              <span className="text-amber-300 font-medium"> React</span> dan
+              <span className="text-amber-300 font-medium"> Go (Golang)</span>.
+              Berfokus pada backend development, RESTful API, autentikasi JWT, Redis caching,
+              serta implementasi Clean Architecture untuk layanan web yang scalable.
             </p>
             {/* Ikon Sosial */}
             <div className="flex items-center justify-between gap-4 pt-4">
@@ -193,7 +176,7 @@ const Home = () => {
                   <a
                     key={index}
                     href={item.link}
-                    className="p-3 bg-slate-900 border border-slate-700 rounded-full text-gray-300 hover:text-blue-400 hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-1"
+                    className="p-3 bg-neutral-900 border border-neutral-700 rounded-full text-gray-300 hover:text-amber-300 hover:border-amber-300 transition-all duration-300 transform hover:-translate-y-1"
                   >
                     <item.Icon size={20} />
                   </a>
@@ -203,7 +186,7 @@ const Home = () => {
                 href="https://drive.google.com/file/d/1p0iX_Hb5knD2N0ouEIjtsFxyhI1W1xre/view?usp=sharing"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-400/40 rounded-full text-blue-200 hover:text-white hover:border-blue-300 hover:bg-blue-500/20 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-amber-400/10 border border-amber-400/40 rounded-full text-amber-200 hover:text-white hover:border-amber-300 hover:bg-amber-400/20 transition-all duration-300"
               >
                 <FaDownload size={16} />
                 <span className="text-sm font-semibold">My Resume</span>
@@ -211,8 +194,8 @@ const Home = () => {
             </div>
           </div>
           {/* Bagian Visual/Placeholder */}
-          <div className="relative w-full h-87.5 bg-linear-to-br from-slate-900 to-slate-800 rounded-2xl border border-slate-700 shadow-2xl flex items-center justify-center overflow-hidden group">
-            <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div className="relative w-full h-87.5 bg-linear-to-br from-neutral-900 to-neutral-800 rounded-2xl border border-neutral-700 shadow-2xl flex items-center justify-center overflow-hidden group">
+            <div className="absolute inset-0 bg-amber-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img src="/my-foto.png" alt="Profile Photo" className="w-full h-full object-cover rounded-2xl" />
           </div>
       
@@ -220,24 +203,24 @@ const Home = () => {
       </section>
 
       {/* About Me */}
-      <section id="about-me" className="bg-slate-950 text-white py-20 px-6 md:px-24">
+      <section id="about-me" className="bg-[#0b0e11] text-white py-20 px-6 md:px-24">
         <div className="mb-12">
-          <h3 className="text-blue-400 font-bold uppercase tracking-widest text-sm mb-2">Tentang Saya</h3>
+          <h3 className="text-amber-400 font-bold uppercase tracking-widest text-sm mb-2">Tentang Saya</h3>
           <h2 className="text-4xl font-extrabold">About Me</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-16">
           {/* Skills Section */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <FaCode className="text-blue-400 text-2xl" />
+              <FaCode className="text-amber-400 text-2xl" />
               <h3 className="text-2xl font-bold">Skills & Technologies</h3>
             </div>
             <p className="text-gray-400 mb-8 leading-relaxed">
-              Saya memiliki pengalaman luas dalam pengembangan web fullstack, dari membangun arsitektur backend yang solid hingga antarmuka pengguna yang intuitif dan responsif.
+              Saya berpengalaman mengembangkan aplikasi fullstack dari sisi frontend hingga backend, dengan fokus utama pada arsitektur backend yang maintainable, performa database, serta integrasi CI/CD.
             </p>
             <div className="flex flex-wrap gap-2">
               {skills.map((skill) => (
-                <span key={skill} className="px-3 py-1 bg-slate-900 border border-slate-700 rounded-md text-sm text-blue-300 hover:bg-blue-900/20 transition-colors">
+                <span key={skill} className="px-3 py-1 bg-neutral-900 border border-neutral-700 rounded-md text-sm text-amber-300 hover:bg-amber-500/20 transition-colors">
                   {skill}
                 </span>
               ))}
@@ -246,15 +229,15 @@ const Home = () => {
           {/* Experience Section */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <FaBriefcase className="text-blue-400 text-2xl" />
+              <FaBriefcase className="text-amber-400 text-2xl" />
               <h3 className="text-2xl font-bold">Pengalaman Kerja</h3>
             </div>
-            <div className="space-y-8 border-l-2 border-slate-800 ml-3">
+            <div className="space-y-8 border-l-2 border-neutral-800 ml-3">
               {experiences.map((exp, index) => (
                 <div key={index} className="relative pl-8">
-                  <div className="absolute -left-2.25 top-1.5 w-4 h-4 bg-blue-500 rounded-full border-4 border-slate-950"></div>
+                  <div className="absolute -left-2.25 top-1.5 w-4 h-4 bg-amber-400 rounded-full border-4 border-[#0b0e11]"></div>
                   <h4 className="text-lg font-bold text-white">{exp.role}</h4>
-                  <div className="text-blue-400 text-sm font-medium mb-2">{exp.company} • {exp.period}</div>
+                  <div className="text-amber-400 text-sm font-medium mb-2">{exp.company} • {exp.period}</div>
                   <p className="text-gray-400 text-sm leading-relaxed">{exp.desc}</p>
                 </div>
               ))}
@@ -264,10 +247,10 @@ const Home = () => {
       </section>
 
       {/* Portfolio */}
-      <section id='projects' className="bg-slate-950 text-white py-20 px-6 md:px-24 min-h-screen relative overflow-hidden">
+      <section id='projects' className="bg-[#0b0e11] text-white py-20 px-6 md:px-24 min-h-screen relative overflow-hidden">
         {/* Header */}
         <div className="mb-12">
-          <h3 className="text-blue-400 font-bold uppercase tracking-widest text-sm mb-2">Projects</h3>
+          <h3 className="text-amber-400 font-bold uppercase tracking-widest text-sm mb-2">Projects</h3>
           <h2 className="text-4xl font-extrabold">Portfolio</h2>
         </div>
         
@@ -277,9 +260,9 @@ const Home = () => {
             <div 
               key={project.id}
               onClick={() => setSelectedProject(project)}
-              className="group cursor-pointer bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-600 transition-all duration-300"
+              className="group cursor-pointer bg-neutral-900/50 border border-neutral-800 rounded-2xl overflow-hidden hover:border-neutral-600 transition-all duration-300"
             >
-              <div className="aspect-video overflow-hidden bg-slate-800">
+              <div className="aspect-video overflow-hidden bg-neutral-800">
                 <img 
                   src={project.image} 
                   alt={project.title}
@@ -300,7 +283,7 @@ const Home = () => {
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-slate-800 text-gray-300 rounded-lg hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-2 bg-neutral-800 text-gray-300 rounded-lg hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Previous
             </button>
@@ -310,8 +293,8 @@ const Home = () => {
                 onClick={() => setCurrentPage(page)}
                 className={`px-4 py-2 rounded-lg transition-all ${
                   currentPage === page
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+                    ? 'bg-amber-400 text-neutral-950'
+                    : 'bg-neutral-800 text-gray-300 hover:bg-neutral-700'
                 }`}
               >
                 {page}
@@ -320,7 +303,7 @@ const Home = () => {
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-slate-800 text-gray-300 rounded-lg hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-2 bg-neutral-800 text-gray-300 rounded-lg hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Next
             </button>
@@ -336,23 +319,23 @@ const Home = () => {
           />
           
           {/* Sidebar Content */}
-          <div className={`absolute right-0 top-0 h-full w-full md:w-170 bg-slate-900 shadow-2xl p-8 overflow-y-auto transform transition-transform duration-500 ease-out ${selectedProject ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className={`absolute right-0 top-0 h-full w-full md:w-170 bg-neutral-900 shadow-2xl p-8 overflow-y-auto transform transition-transform duration-500 ease-out ${selectedProject ? 'translate-x-0' : 'translate-x-full'}`}>
             {selectedProject && (
               <div className="space-y-8">
                 <button 
                   onClick={() => setSelectedProject(null)}
-                  className="absolute top-6 right-6 p-2 hover:bg-slate-800 rounded-full text-gray-400 hover:text-white"
+                  className="absolute top-6 right-6 p-2 hover:bg-neutral-800 rounded-full text-gray-400 hover:text-white"
                 >
                   <FaTimes size={24} />
                 </button>
 
                 <div className="pt-8">
-                  <span className="text-blue-400 text-xs font-bold uppercase tracking-widest">{selectedProject.category}</span>
+                  <span className="text-amber-400 text-xs font-bold uppercase tracking-widest">{selectedProject.category}</span>
                   <h2 className="text-3xl font-bold mt-2">{selectedProject.title}</h2>
                 </div>
 
-                <div className="rounded-xl overflow-hidden border border-slate-700">
-                  <img src={selectedImage} alt="Detail" className="w-full" />
+                <div className="rounded-xl overflow-hidden border border-neutral-700 aspect-video bg-neutral-800">
+                  <img src={selectedImage} alt="Detail" className="w-full h-full object-cover" />
                 </div>
 
                 <div className="flex gap-2 mt-4 overflow-x-auto">
@@ -361,7 +344,7 @@ const Home = () => {
                       key={idx}
                       src={img}
                       alt={`Thumbnail ${idx + 1}`}
-                      className={`w-16 h-16 object-cover rounded cursor-pointer border-2 transition-all ${selectedImage === img ? 'border-blue-500' : 'border-slate-600 hover:border-slate-500'}`}
+                      className={`w-16 h-16 object-cover rounded cursor-pointer border-2 transition-all ${selectedImage === img ? 'border-amber-400' : 'border-neutral-600 hover:border-neutral-500'}`}
                       onClick={() => setSelectedImage(img)}
                     />
                   ))}
@@ -384,7 +367,7 @@ const Home = () => {
                   <h5 className="text-xs font-bold text-gray-500 uppercase mb-3">Stack</h5>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.stack.map(s => (
-                      <span key={s} className="px-3 py-1 bg-slate-800 text-blue-300 text-xs rounded-full border border-slate-700">{s}</span>
+                      <span key={s} className="px-3 py-1 bg-neutral-800 text-amber-300 text-xs rounded-full border border-neutral-700">{s}</span>
                     ))}
                   </div>
                 </div>
@@ -393,7 +376,7 @@ const Home = () => {
                   href={selectedProject.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-bold transition-all w-full justify-center"
+                  className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-neutral-950 px-6 py-3 rounded-lg font-bold transition-all w-full justify-center"
                 >
                   Live Demo <FaExternalLinkAlt size={14} />
                 </a>
@@ -404,18 +387,17 @@ const Home = () => {
       </section>
 
       {/* Call To Action */}
-      <section id='contact' className="bg-slate-950 text-white py-20 px-6 md:px-24">
+      <section id='contact' className="bg-[#0b0e11] text-white py-20 px-6 md:px-24">
         <div className="max-w-6xl mx-auto">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-linear-to-br from-slate-900 via-slate-900 to-slate-800 p-10 md:p-14">
-            <div className="absolute -top-24 -right-24 w-72 h-72 bg-blue-500/20 blur-3xl rounded-full"></div>
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-500/20 blur-3xl rounded-full"></div>
+          <div className="contact-card relative overflow-hidden rounded-3xl border border-neutral-800 bg-linear-to-br from-neutral-900 via-neutral-900 to-neutral-800 p-10 md:p-14">
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-amber-400/20 blur-3xl rounded-full"></div>
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-300/20 blur-3xl rounded-full"></div>
 
             <div className="relative z-10 grid md:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-4xl font-bold">Siap wujudkan ide produk Anda?</h2>
                 <p className="text-gray-300 leading-relaxed max-w-2xl">
-                  Ceritakan kebutuhan Anda, saya bantu dari perencanaan hingga implementasi.
-                  Respon cepat langsung via WhatsApp.
+                  Jika kamu butuh Fullstack Web Developer untuk membangun API, sistem autentikasi, atau aplikasi berbasis Go dan React, saya siap bantu dari desain sampai implementasi.
                 </p>
               </div>
               <div className="flex md:justify-end">
@@ -423,7 +405,7 @@ const Home = () => {
                   href="https://wa.me/6282114715378"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-8 py-4 rounded-xl font-bold transition-all w-full md:w-auto justify-center shadow-lg shadow-emerald-500/20"
+                  className="inline-flex items-center gap-3 bg-amber-400 hover:bg-amber-300 text-neutral-950 px-8 py-4 rounded-xl font-bold transition-all w-full md:w-auto justify-center shadow-lg shadow-amber-400/20"
                 >
                   <FaComment size={18} />
                   Kontak via WhatsApp
@@ -434,11 +416,12 @@ const Home = () => {
         </div>
       </section>
 
-      <footer className="border-t border-slate-800/70 bg-slate-950">
-        <div className="mx-auto max-w-6xl px-6 py-6 text-center text-sm text-slate-400">
+      <footer className="border-t border-neutral-800/70 bg-[#0b0e11]">
+        <div className="mx-auto max-w-6xl px-6 py-6 text-center text-sm text-neutral-400">
           © 2026 Arif. All rights reserved.
         </div>
       </footer>
+      </div>
     </>
     
   );

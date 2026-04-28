@@ -1,1 +1,63 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+.light-theme {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.light-theme section,
+.light-theme footer,
+.light-theme header {
+  background-color: #f8fafc !important;
+}
+
+.light-theme [class*="bg-neutral-900"] {
+  background-color: #ffffff !important;
+}
+
+.light-theme [class*="bg-neutral-800"] {
+  background-color: #f1f5f9 !important;
+}
+
+.light-theme [class*="border-neutral-"] {
+  border-color: #cbd5e1 !important;
+}
+
+.light-theme .text-white {
+  color: #0f172a !important;
+}
+
+.light-theme .text-neutral-400,
+.light-theme .text-neutral-300,
+.light-theme .text-gray-500,
+.light-theme .text-gray-400,
+.light-theme .text-gray-300 {
+  color: #475569 !important;
+}
+
+.light-theme [class*="text-amber-"] {
+  color: #b45309 !important;
+}
+
+.light-theme .bg-\[\#0b0e11\] {
+  background-color: #f8fafc !important;
+}
+
+.light-theme .bg-\[\#0b0e11\]\/90 {
+  background-color: rgba(248, 250, 252, 0.9) !important;
+}
+
+.light-theme .hero-name {
+  color: #0f172a !important;
+  background-image: none !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+.light-theme .brand-name {
+  color: #0f172a !important;
+}
+
+.light-theme .contact-card {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
