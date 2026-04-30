@@ -90,11 +90,11 @@ const Home = () => {
       id: 2,
       title: "Coffee Shop Ecommerce",
       category: "Fullstack Application",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600",
+      image: "/coffee-shop-1.png",
       images: [
-        "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=600"
+        "/coffee-shop-1.png",
+        "/coffee-shop-auth.png",
+        "/coffee-shop-order.png"
       ],
       description: "Aplikasi e-commerce fullstack dengan alur belanja lengkap dari autentikasi hingga checkout dan riwayat pesanan. Keterangan: proyek ini dikerjakan end-to-end untuk menguji integrasi frontend, backend, cache, dan CI/CD.",
       problem: "Membutuhkan arsitektur aplikasi yang maintainable, aman, dan tetap responsif saat beban data meningkat.",
@@ -106,11 +106,16 @@ const Home = () => {
       id: 3,
       title: "Shorten",
       category: "Fullstack URL Shortener",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
+      image: "/short-link-landing.png",
       images: [
-        "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1675271591211-126ad94e495d?auto=format&fit=crop&q=80&w=600",
-        "https://images.unsplash.com/photo-1620712943543-bcc4628c9757?auto=format&fit=crop&q=80&w=600"
+        "/short-link-landing.png",
+        "short-link-auth.png",
+        "/short-link-create.png",
+        "/short-link-dashboard.png",
+        "/short-link-custom.png",
+        "/short-link-profile.png",
+        "/short-link-edit.png",
+        "/short-link-404.png"
       ],
       description: "URL shortener fullstack dengan autentikasi, manajemen link personal, redirect publik, dan profile management. Keterangan: menekankan keamanan auth, validasi slug, serta caching Redis untuk performa listing link.",
       problem: "Perlu sistem short link yang aman, fleksibel (custom slug), dan cepat diakses user.",
